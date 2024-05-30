@@ -128,7 +128,47 @@ class BinaryTree{
 		return max+1;
 	}
 	
+	Node deleteNode(Node root, int key) {
+		if(root == null)
+			return null;
+		
+        // If the key to be deleted is smaller than the root's key, then it lies in the left subtree
+		if(root.value>key) {
+				root.left = deleteNode(root.left, key);
+		}
+		
+        // If the key to be deleted is greater than the root's key, then it lies in the right subtree
+		else if(root.value < key) {
+			root.right = deleteNode(root.right, key);
+		}
+		
+        // If key is same as root's key, then this is the node to be deleted
+		else {
+			if(root.left == null) {
+				return root.right;
+			}
+			
+			else if (root.right == null) {
+				return root.left;
+			}
+			
+            // Node with two children: Get the inorder successor (smallest in the right subtree)
+			root.value = minValue(root.right);
+			
+			root.right = deleteNode(root.right, root.value);
+		}
+		
+		return root;
+	}
 	
+	int minValue(Node root) {
+		int min = root.value;
+        while (root.left != null) {
+            min = root.left.value;
+            root = root.left;
+        }
+        return min;
+	}
 	
 	public static void main (String[] args) {
 		BinaryTree tree = new BinaryTree();
@@ -142,7 +182,7 @@ class BinaryTree{
         tree.insert(170);
         
         System.out.println("Inorder: ");
-        tree.inorder();  // Output: 2 5 10 15
+        tree.inorder();
         
         System.out.println("Preorder: ");
         tree.preorder();
@@ -154,9 +194,16 @@ class BinaryTree{
         System.out.println("BFS: ");
         tree.bfs();
         
+        System.out.println("Deleting: ");
+        Node del = tree.deleteNode(root, 170);
+        System.out.println(del.value);
+        
         System.out.println("Height: ");
         int x = tree.height(root);
         System.out.println(x);
+        
+        System.out.println("Inorder: ");
+        tree.inorder();
 		
 	}
 }
