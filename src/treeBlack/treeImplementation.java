@@ -15,7 +15,7 @@ class Node{
 }
 
 class BinaryTree{
-	Node root;
+	static Node root;
 	
 	BinaryTree(){
 		root = null;
@@ -117,6 +117,19 @@ class BinaryTree{
 		System.out.println();
 	}
 	
+	int height(Node root) {
+		if (root == null)
+			return 0;
+		
+		int left = height(root.left);
+		int right = height(root.right);
+		
+		int max = Math.max(left, right);
+		return max+1;
+	}
+	
+	
+	
 	public static void main (String[] args) {
 		BinaryTree tree = new BinaryTree();
         tree.insert(100);
@@ -126,6 +139,7 @@ class BinaryTree{
         tree.insert(200);
         tree.insert(150);
         tree.insert(300);
+        tree.insert(170);
         
         System.out.println("Inorder: ");
         tree.inorder();  // Output: 2 5 10 15
@@ -139,6 +153,10 @@ class BinaryTree{
 //        System.out.println(tree.search(7));   // Output: false
         System.out.println("BFS: ");
         tree.bfs();
+        
+        System.out.println("Height: ");
+        int x = tree.height(root);
+        System.out.println(x);
 		
 	}
 }
