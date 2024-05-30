@@ -1,5 +1,7 @@
 package treeBlack;
 
+import java.util.*;
+
 class Node{
 	int value;
 	Node left;
@@ -81,25 +83,49 @@ class BinaryTree{
 	void preorderRec(Node root) {
 		if(root != null) {
 			System.out.println(root.value + " ");
-			inorderRec(root.left);
-			inorderRec(root.right);
+			preorderRec(root.left);
+			preorderRec(root.right);
 		}
 	}
 	
 	void postorderRec(Node root) {
 		if(root != null) {
-			inorderRec(root.left);	
-			inorderRec(root.right);
+			postorderRec(root.left);	
+			postorderRec(root.right);
 			System.out.println(root.value + " ");
 		}
 	}
 	
+	void bfs() {
+		if(root == null)
+			return;
+		
+		Queue<Node> queue = new LinkedList<>();
+		queue.add(root);
+		
+		while(!queue.isEmpty()) {
+			Node current = queue.poll();
+			System.out.print(current.value + " ");
+			
+			if(current.left != null)
+				queue.add(current.left);
+			
+			if(current.right != null)
+				queue.add(current.right);
+		}
+		
+		System.out.println();
+	}
+	
 	public static void main (String[] args) {
 		BinaryTree tree = new BinaryTree();
+        tree.insert(100);
+        tree.insert(20);
         tree.insert(10);
-        tree.insert(5);
-        tree.insert(15);
-        tree.insert(2);
+        tree.insert(30);
+        tree.insert(200);
+        tree.insert(150);
+        tree.insert(300);
         
         System.out.println("Inorder: ");
         tree.inorder();  // Output: 2 5 10 15
@@ -111,6 +137,8 @@ class BinaryTree{
         tree.postorder();
 //        System.out.println(tree.search(10));  // Output: true
 //        System.out.println(tree.search(7));   // Output: false
+        System.out.println("BFS: ");
+        tree.bfs();
 		
 	}
 }
