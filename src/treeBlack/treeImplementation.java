@@ -170,6 +170,59 @@ class BinaryTree{
         return min;
 	}
 	
+	int findCeil(Node root, int key) {
+        if (root == null) return -1;
+        // Code here
+        
+        int ceil = -1;
+        
+        while(root != null){
+            if(root.value == key){
+                ceil = root.value;
+                return ceil;
+            }
+            
+            if(key > root.value){
+                root = root.right;
+            }else{
+                ceil = root.value;
+                root = root.left;
+            }
+        }
+        
+        return ceil;
+    }
+	
+	int findFloor(Node root, int key) {
+		int floor = -1;
+
+        // Traverse the BST until reaching
+        // the end or finding the key
+        while (root != null) {
+            // If the key is found, assign it
+            // as the floor value and return
+            if (root.value == key) {
+                floor = root.value;
+                return floor;
+            }
+
+            // If the key is greater than the current
+            // node's value, move to the right subtree
+            if (key > root.value) {
+                // Update the floor with the current node's
+                // value and move to the right subtree
+                floor = root.value;
+                root = root.right;
+            } else {
+                // If the key is smaller than the current
+                // node's value, move to the left subtree
+                root = root.left;
+            }
+        }
+        // Return the computed floor value
+        return floor;
+	}
+	
 	public static void main (String[] args) {
 		BinaryTree tree = new BinaryTree();
         tree.insert(100);
@@ -204,6 +257,14 @@ class BinaryTree{
         
         System.out.println("Inorder: ");
         tree.inorder();
+        
+        System.out.println("Ceil: ");
+        int z = tree.findCeil(root, 110);
+        System.out.println(z);
+        
+        System.out.println("Floor: ");
+        int w = tree.findFloor(root, 110);
+        System.out.println(w);
 		
 	}
 }
