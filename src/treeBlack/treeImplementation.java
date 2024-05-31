@@ -223,6 +223,38 @@ class BinaryTree{
         return floor;
 	}
 	
+	public List<List<Integer>> levelOrder(Node root){
+		List<List<Integer>> solution = new ArrayList<>();
+		Queue<Node> que = new LinkedList<>();
+		int max = Integer.MIN_VALUE;
+		
+		if(root == null)
+			return solution;
+		
+		que.offer(root);
+		
+		while(!que.isEmpty()){
+			int levelNum = que.size();
+			List<Integer> subList = new ArrayList<>();
+			for(int i=0; i<levelNum; i++) {
+				if(que.peek().left != null) que.offer(que.peek().left);
+				if(que.peek().right != null) que.offer(que.peek().right);
+				
+				int vals = que.poll().value;
+				
+				if(vals > max)
+					max = vals;
+				
+				subList.add(vals);
+			}
+			
+			solution.add(subList);
+			System.out.println("Level wise max: "+max);
+		}
+		
+		return solution;
+	}
+	
 	public static void main (String[] args) {
 		BinaryTree tree = new BinaryTree();
         tree.insert(100);
@@ -233,6 +265,8 @@ class BinaryTree{
         tree.insert(150);
         tree.insert(300);
         tree.insert(170);
+        
+        List<List<Integer>> abc = new ArrayList<>();
         
         System.out.println("Inorder: ");
         tree.inorder();
@@ -265,6 +299,10 @@ class BinaryTree{
         System.out.println("Floor: ");
         int w = tree.findFloor(root, 110);
         System.out.println(w);
+        
+        System.out.println("BFS in arrayList: ");
+        abc = tree.levelOrder(root);
+        System.out.println(abc);
 		
 	}
 }
